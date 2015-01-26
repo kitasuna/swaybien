@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Swaybien</title>
+		<style>
+			body {
+				min-width: 210px;
+				overflow-x: hidden;
+				/*font-family: Tahoma, sans-serif;*/
+				font-family: Helvetica;
+				font-size: 15px;
+				background-color: #FFF;
+				max-height: 300px;
+			}
+
+			img {
+				margin: 5px;
+				border: 2px solid black;
+				vertical-align: middle;
+				width: 75px;
+				height: 75px;
+			}
+
+			a {
+				color: #333;
+				text-decoration: none;
+				font-weight:bold;
+				display: block;
+				width: 100%;
+				padding: 4px 0px 4px 2px;
+			}
+
+			a:hover {
+				color: #CC00FF;
+			}
+
+			li {
+				margin: 0px;
+				list-style: none;
+				list-style-type: none;
+				
+			}
+
+			li:hover {
+				background-color: #FFFFDF;
+			}
+
+			.recent-links {
+			}
+
+			.recent-links .header {
+				position: absolute;
+				z-index: 5;
+				color: red;
+				margin-left: 78%;
+				margin-top: 20px;
+				-webkit-transform: rotate(90deg);
+			}
+
+			h4 {
+				position: absolute;
+				z-index: 5;
+				color: #CC00FF;
+				margin-left: 78%;
+				margin-top: 20px;
+				-webkit-transform: rotate(90deg);
+			}
+
+			#folder-list {
+				position: absolute;
+				z-index: 5;
+			}
+
+			#brand {
+				width: 100%;
+				height: 100px;
+				position: fixed;
+				z-index: -1;
+				padding: 15px;
+				bottom: 0px;
+				background-image: url('images/icon48.png');
+				background-repeat: no-repeat;
+				background-attachment: fixed;
+				background-position: right bottom;
+				opacity: 0.5;
+			}
+
+		</style>
+		<script src="scripts/popup.js"></script>
+	</head>
+	<body>
+		<div id="recent-list"></div>
+		<div id="folder-list"></div>
+		<div id="brand"></div>
+	</body>
+</html>
+

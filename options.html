@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Swaybien Options</title>
+	<link rel="stylesheet" type="text/css" href="styles/options.css" />
+</head>
+<body>
+<div id="content">
+	<h1>Swaybien Options</h1>
+	<div class="options-block">
+		<h3>Tabs</h3>
+		<select id="tabs">
+			<option value="new">Always open in a new tab</option>
+			<option value="current">Open in current tab</option>
+		</select>
+	</div>
+
+	<div class="options-block">
+		<h3>Sorting</h3>
+		<select id="sort">
+			<option value="alpha">Alphabetically</option>
+			<option value="default">Chrome default</option>
+		</select>
+	</div>
+
+	<div class="options-block">
+		<h3>Recently Used</h3>
+		<input type="checkbox" id="show_recent" value="1"> Show recently used folders at the top
+
+		<br />
+		<div id="recent_count_div">
+			<ul>
+			<li>
+				<input type="checkbox" id="recent_exclude" /> Exclude recently used items from main list.
+			</li>
+
+			<li>
+				&nbsp;Display <input type="text" id="recent_count" maxlength="2" size="4"value=""> most recently used.
+			</li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="options-block">
+		<h3>Include Folders</h3>
+		<div class="checkbox-list" id="include-folder-list"></div>
+	</div>
+
+	<div id="status"></div>
+	<div id="error"></div>
+
+	
+	<p>
+		<button id="save">Save</button>
+	</p>
+</div>
+<script src="scripts/options.js"></script>
+</body>
+</html>
