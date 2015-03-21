@@ -22,6 +22,7 @@ var zui = {
 
 		chrome.storage.sync.get({
 			clickHistory: new Array(),
+			excludeFolders: new Array(),
 			showRecentBehavior: true,
 			recentItemCount: 3,
 			recentExclude: false,
@@ -42,11 +43,24 @@ var zui = {
 					tmphtml += '<div style="min-height: 60px;">';
 					tmphtml += '<h4>Recent</h4>';
 				}
-                                // Somewhere in here we need to check if these folders actually exist with these ids
-                                // and also if they have the same names...
+
+				// Somewhere in here we need to check if these folders actually exist with these ids
+				// and also if they have the same names...
 				for(i=0; i < items.recentItemCount && i < items.clickHistory.length; i++) {
-					tmphtml += '<li><a href="#" id ="'+items.clickHistory[i].id+'">' + items.clickHistory[i].text + '</a></li>';
 					
+					var exists = false;
+
+					allfolders.forEach(function(node) {
+						console.log(node.id);
+						if(node.id == items.clickHistory[i].id) {
+							items.clickHistory[i].text = node.title;
+							exists = true;
+						}
+					});
+					
+					if(exists) {
+						tmphtml += '<li><a href="#" id ="'+items.clickHistory[i].id+'">' + items.clickHistory[i].text + '</a></li>';
+					}
 					//Remove this element from the main array
 					if(items.recentExclude) {
 						allfolders = allfolders.filter(function(elem){return elem.id !== items.clickHistory[i].id;});
@@ -76,7 +90,9 @@ var zui = {
 			
 
 			allfolders.forEach(function(node) {
-				document.body.innerHTML += '<li><a href="#" id ="'+node.id+'">' + node.title + '</a></li>';
+				if(items.excludeFolders.indexOf(node.id) == -1) {
+					document.body.innerHTML += '<li><a href="#" id ="'+node.id+'">' + node.title + '</a></li>';
+				}
 			});
 
 			// Now we want to go through each of the folders

@@ -10,12 +10,23 @@ function save_options() {
 	var showRecent = document.getElementById('show_recent').checked ? true : false;
 	var recentItemCount = document.getElementById('show_recent').checked ? document.getElementById('recent_count').value : 3;
 	var recentExclude = document.getElementById('recent_exclude').checked ? true : false;
+	
+	var exclude_checks = document.getElementById('exclude-folder-list').getElementsByClassName('exclude-checkbox');
+	var excludeFolders = new Array();
+	[].forEach.call(exclude_checks, function (el) {
+										if(el.checked == true) {
+											excludeFolders.push(el.id.match(/\[(\d+)\]/i)[1]);
+										}
+									});
+
+	console.log(excludeFolders);
 	chrome.storage.sync.set({
 		tabsBehavior: tabs,
 		sortBehavior: sort,
 		showRecentBehavior: showRecent,
 		recentItemCount: recentItemCount,
 		recentExclude: recentExclude,
+		excludeFolders: excludeFolders,
 	}, function() {
 		// Update status to let user know options were saved.
 		var error = document.getElementById('error');
@@ -38,16 +49,27 @@ function restore_options() {
 		showRecentBehavior: true,
 		recentItemCount: 3,
 		recentExclude: false,
+		excludeFolders: new Array(),
 	}, function(items) {
 		document.getElementById('tabs').value = items.tabsBehavior;
 		document.getElementById('sort').value = items.sortBehavior;
 		document.getElementById('show_recent').checked = items.showRecentBehavior;
 		document.getElementById('recent_count').value = items.recentItemCount;
 		document.getElementById('recent_exclude').checked = items.recentExclude;
-
+	
+		var exclude_checks = document.getElementById('exclude-folder-list').getElementsByClassName('exclude-checkbox');
+		if(items.excludeFolders) {
+			[].forEach.call(exclude_checks, function (el) {
+												var folder_id = el.id.match(/\[(\d+)\]/i)[1];
+												if(items.excludeFolders.indexOf(folder_id) != -1) {
+													el.checked = true;
+												}
+											});
+		}
 		if(items.showRecentBehavior) {
 			document.getElementById('recent_count_div').style.visibility = 'visible';
 		}
+	
 	});
 }
 
@@ -88,9 +110,9 @@ function load_bookmark_list() {
 			
 			var tmp_html = "";
 			allfolders.forEach(function(item) {
-				tmp_html += "<input type='checkbox' id='include_folders["+item.id+"]' name='include_folders["+item.id+"]' value='1' /> <label for='include_folders["+item.id+"]'>" + item.title + "</label><br />";
+				tmp_html += "<input type='checkbox' class='exclude-checkbox' id='exclude_folders["+item.id+"]' name='exclude_folders["+item.id+"]' value='1' /> <label for='exclude_folders["+item.id+"]'>" + item.title + "</label><br />";
 			});
-			document.getElementById('include-folder-list').innerHTML = tmp_html;
+			document.getElementById('exclude-folder-list').innerHTML = tmp_html;
 		});
 }
 
@@ -115,7 +137,7 @@ function processNode(node) {
 
 	} // end processNode()
 
-document.addEventListener('DOMContentLoaded', restore_options);
 document.addEventListener('DOMContentLoaded', load_bookmark_list);
+document.addEventListener('DOMContentLoaded', restore_options);
 document.getElementById('save').addEventListener('click', save_options);
 document.getElementById('show_recent').addEventListener('change', toggle_recent_count);

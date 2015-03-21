@@ -3,7 +3,7 @@
 
   "name": "Swaybien",
   "description": "Opens a random bookmark from one of your bookmark folders.",
-  "version": "0.0.2.51",
+  "version": "0.0.5",
   
   "options_page": "options.html",
 
